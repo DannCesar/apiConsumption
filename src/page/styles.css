@@ -1,10 +1,16 @@
+.titleContainer {
+    >h1 {
+        margin-bottom: 10px;
+    }
+}
+
 .searchContainer {
 
     display: flex;
     justify-content: space-between;
     gap: 1.5rem;
     padding: 8px;
-    width: 60%;
+    width: fit-content;
     border: 2px solid;
     border-radius: 12px;
 
@@ -17,7 +23,7 @@
         background-color: black;
         color: white;
         padding: 4px;
-        width: 15%;
+
         display: flex;
         justify-content: center;
     }
@@ -28,6 +34,7 @@
     grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
     margin-top: 20px;
+
 }
 
 .infoContainer {

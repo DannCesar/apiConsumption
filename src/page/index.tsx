@@ -9,10 +9,18 @@ interface ListCharactersProps {
   species: string;
   gender: string;
 }
+
 export default function Home() {
   const [listOfCharacters, setListOfCharacters] = useState<
     ListCharactersProps[]
   >([]);
+  const [selectCharacters, setSelectCharacters] = useState<
+    ListCharactersProps[]
+  >([]);
+  const [characterIsVisible, setCharacterIsVisible] = useState(false);
+  const [selectedCharacterId, setSelectedCharacterId] = useState<number | null>(
+    null
+  );
 
   useEffect(() => {
     async function fetchData() {
@@ -27,41 +35,68 @@ export default function Home() {
     }
     fetchData();
   }, []);
-  console.log(listOfCharacters, "listagemDePersonagens");
+
+  function createList() {
+    const selectedCharacterForId = listOfCharacters.find(
+      (character) => character.id === selectedCharacterId
+    );
+    const selectedEqualId = selectCharacters.some(
+      (character) => character.id === selectedCharacterId
+    );
+
+    if (selectedCharacterForId && !selectedEqualId) {
+      setSelectCharacters([...selectCharacters, selectedCharacterForId]);
+      setCharacterIsVisible(true);
+    }
+    if (selectedEqualId) {
+      alert(
+        "As informações do personagem já estão disponiveis,selecione outro personagem."
+      );
+    }
+  }
+
+  function handleChangeSelectedById(event: React.ChangeEvent<HTMLSelectElement>) {
+    setSelectedCharacterId(parseInt(event.target.value));
+  }
+
   return (
     <>
-      <div>
-        <h1>Rick and Morty </h1>
-        <h2>Selecione seu personagem </h2>
+      <div className="titleContainer">
+        <h1>Rick and Morty</h1>
+        <h2>Selecione seu personagem</h2>
         <div className="searchContainer">
-          <select>
+          <select onChange={handleChangeSelectedById}>
+            <option value="">Selecione um personagem</option>
             {listOfCharacters.map((character) => (
-              <option key={character.id}>{character.name}</option>
+              <option value={character.id} key={character.id}>
+                {character.name}
+              </option>
             ))}
           </select>
-          <button>Buscar...</button>
+          <button onClick={createList}>Buscar...</button>
         </div>
       </div>
       <div>
-        <div className="geralContainer">
-          {listOfCharacters.map((character) => (
-            <div className="infoContainer">
-              <span>
-                Nome: <span></span>
-                {character.name}
-              </span>
-              <span>
-                Genero: <span>{character.gender}</span>
-              </span>
-              <span>
-                Espécie: <span>{character.species}</span>
-              </span>
-              <div>
-                <img src={character.image} />
+        {characterIsVisible && (
+          <div className="geralContainer">
+            {selectCharacters.map((character) => (
+              <div className="infoContainer" key={character.id}>
+                <span>
+                  Nome: <span>{character.name}</span>
+                </span>
+                <span>
+                  Gênero: <span>{character.gender}</span>
+                </span>
+                <span>
+                  Espécie: <span>{character.species}</span>
+                </span>
+                <div>
+                  <img src={character.image} alt={character.name} />
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
