@@ -27,10 +27,9 @@ export default function Home() {
     async function fetchData() {
       try {
         const data = await RickAndMortyApi();
-        console.log(data, "lista");
         setListOfCharacters(data.results);
       } catch (error) {
-        alert("Erro ao obter informações");
+        alert("Erro ao obter informações,tente novamente mais tarde!");
         console.error("Erro", error);
       }
     }
