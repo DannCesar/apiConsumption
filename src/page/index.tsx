@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { RickAndMortyApi } from "../api/api";
 import "./styles.css";
+import imgRickandMortyPortal from "../assets/rickAndMortyPortal.png";
 
 interface ListCharactersProps {
   id: number;
@@ -55,7 +56,9 @@ export default function Home() {
     }
   }
 
-  function handleChangeSelectedById(event: React.ChangeEvent<HTMLSelectElement>) {
+  function handleChangeSelectedById(
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) {
     setSelectedCharacterId(parseInt(event.target.value));
   }
 
@@ -63,8 +66,13 @@ export default function Home() {
     <>
       <div className="titleContainer">
         <h1>Rick and Morty</h1>
-        <h2>Selecione seu personagem</h2>
-        <div className="searchContainer">
+      </div>
+      <div className="searchContainer">
+        <h2>
+          Selecione seu personagem para obter informações sobre o universo de
+          Rick and Morty
+        </h2>
+        <div className="selectContainer">
           <select onChange={handleChangeSelectedById}>
             <option value="">Selecione um personagem</option>
             {listOfCharacters.map((character) => (
@@ -76,9 +84,9 @@ export default function Home() {
           <button onClick={createList}>Buscar...</button>
         </div>
       </div>
-      <div>
-        {characterIsVisible && (
-          <div className="geralContainer">
+      <div className="geralContainer">
+        {characterIsVisible ? (
+          <div className="cardsContainer">
             {selectCharacters.map((character) => (
               <div className="infoContainer" key={character.id}>
                 <span>
@@ -90,11 +98,19 @@ export default function Home() {
                 <span>
                   Espécie: <span>{character.species}</span>
                 </span>
-                <div>
+                <div className="imgContainer">
                   <img src={character.image} alt={character.name} />
                 </div>
               </div>
             ))}
+          </div>
+        ) : (
+          <div>
+            <img
+              width={400}
+              src={imgRickandMortyPortal}
+              alt="Rick and Morty in Portal"
+            />
           </div>
         )}
       </div>
