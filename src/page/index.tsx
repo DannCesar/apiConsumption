@@ -104,9 +104,8 @@ export default function Home() {
             ))}
           </div>
         ) : (
-          <div>
+          <div className="notCard">
             <img
-              width={400}
               src={imgRickandMortyPortal}
               alt="Rick and Morty in Portal"
             />

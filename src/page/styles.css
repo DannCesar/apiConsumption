@@ -65,7 +65,11 @@
   padding: 4px;
   border-radius: 8px;
 }
-
+.notCard {
+  > img {
+    width: 400px;
+  }
+}
 .imgContainer {
   display: flex;
 
@@ -73,5 +77,24 @@
     border-radius: 8px;
     margin-top: 10px;
     padding: 4px;
+  }
+}
+
+@media (max-width: 991px) {
+  .geralContainer {
+    flex-direction: column;
+    width: 300px;
+  }
+  .searchContainer {
+    width: auto;
+  }
+  .cardsContainer {
+    grid-template-columns: 1fr;
+  }
+  .notCard {
+    margin-top: 20px;
+    > img {
+      width: 320px;
+    }
   }
 }
